@@ -65,7 +65,7 @@ public class AccountController(DataContext context, ITokenService tokenService) 
         {
             UserName = user.UserName,
             Token = tokenService.CreateToken(user)
-        };;
+        };
     }
 
     private async Task<bool> UserExists(string username)
