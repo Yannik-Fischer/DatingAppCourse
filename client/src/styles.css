@@ -18,3 +18,11 @@
 .mt-10 {
     margin-top: 5.5rem !important;
 }
+
+.member-tabset > ul > li > a.nav-link {
+    padding: 8px 16px;
+}
+
+.member-tabset > div > tab.active {
+    margin-top: 12px;
+}

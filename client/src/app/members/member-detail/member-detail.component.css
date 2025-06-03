@@ -1,0 +1,18 @@
+.img-wrapper {
+    margin: 20px;
+}
+
+.img-wrapper img {
+    padding: 3px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+}
+
+.card-body {
+    padding: 0 20px;
+}
+
+.card-footer {
+    padding: 10px 20px;
+    background-color: inherit;
+    border-top: none;
+}
