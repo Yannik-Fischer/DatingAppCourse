@@ -22,11 +22,11 @@
         @if (accountService.currentUser()) {
             <div class="dropdown" dropdown>
                 <a class="dropdown-toggle text-light text-decoration-none" dropdownToggle>Welcome {{accountService.currentUser()?.username | titlecase}}</a>
-                <div class="dropdown-menu" *dropdownMenu>
-                    <a class="dropdown-item">Edit profile</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" (click)="logout()">Logout</a>
-                </div>
+                <ul class="dropdown-menu dropdown-menu-right mt-1 py-1" *dropdownMenu>
+                    <li routerLink="/member/edit" class="dropdown-item">Edit profile</li>
+                    <li class="dropdown-divider"></li>
+                    <li class="dropdown-item" (click)="logout()">Logout</li>
+                </ul>
             </div>
         }
 
