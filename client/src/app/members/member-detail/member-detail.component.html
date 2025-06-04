@@ -46,7 +46,7 @@
                 </tab>
                 <tab heading="Photos" #photoTab="tab">
                     @if (photoTab.active) {
-                        <gallery thumbs counter nav [items]="images" class="gallery"></gallery>
+                        <gallery thumbs counter nav loop [items]="images" class="gallery"></gallery>
                     }
                 </tab>
                 <tab heading="Messages">

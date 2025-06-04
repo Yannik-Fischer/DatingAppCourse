@@ -31,7 +31,7 @@
 
         <div class="col-8">
             <tabset class="member-tabset">
-                <tab heading="About {{member.knownAs}}">
+                <tab heading="About me">
                     <form id="editForm" #editForm="ngForm" (ngSubmit)="updateMember()">
                         <h4 class="mt-3">Description</h4>
                         <textarea [(ngModel)]="member.introduction" name="introduction" class="form-control" rows="6"></textarea>
@@ -50,7 +50,7 @@
                     </form>
                 </tab>
                 <tab heading="Edit photos">
-                    <p>Photo edit will go here</p>
+                    <app-photo-editor [member]="member" (memberChange)="onMemberChange($event)"></app-photo-editor>
                 </tab>
             </tabset>
         </div>
