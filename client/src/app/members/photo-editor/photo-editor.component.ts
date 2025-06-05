@@ -18,13 +18,13 @@ export class PhotoEditorComponent implements OnInit {
   private accountService = inject(AccountService);
   private memberService = inject(MembersService);
   private baseUrl = environment.apiUrl;
-  
+
   member = input.required<Member>();
   memberChange = output<Member>();
-  
+
   uploader?: FileUploader;
   hasBaseDropZoneOver = false;
-  
+
   ngOnInit(): void {
     this.initializeUploader();
   }
@@ -33,10 +33,10 @@ export class PhotoEditorComponent implements OnInit {
     this.hasBaseDropZoneOver = e;
   }
 
-  deletePhoto(photo: Photo){
+  deletePhoto(photo: Photo) {
     this.memberService.deletePhoto(photo).subscribe({
       next: () => {
-        const updatedMember = {...this.member()};
+        const updatedMember = { ...this.member() };
         updatedMember.photos = updatedMember.photos.filter(x => x.id !== photo.id);
         this.memberChange.emit(updatedMember);
       }
@@ -45,26 +45,7 @@ export class PhotoEditorComponent implements OnInit {
 
   setMainPhoto(photo: Photo) {
     this.memberService.setMainPhoto(photo).subscribe({
-      next: () => {
-        const user = this.accountService.currentUser();
-        if (user) {
-          user.photoUrl = photo.url;
-          this.accountService.setCurrentUser(user);
-        }
-
-        const updatedMember = {...this.member()};
-        updatedMember.photoUrl = photo.url;
-        updatedMember.photos.forEach(p => {
-          if (p.isMain) {
-            p.isMain = false;
-          }
-          if (p.id === photo.id) {
-            p.isMain = true;
-          }
-        })
-
-        this.memberChange.emit(updatedMember);
-      }
+      next: () => this.updateClientPhoto(photo)
     })
   }
 
@@ -85,11 +66,42 @@ export class PhotoEditorComponent implements OnInit {
 
     this.uploader.onSuccessItem = (item, response, status, header) => {
       const photo = JSON.parse(response);
-      const updatedMember = {...this.member()};
-      
+      const updatedMember = { ...this.member() };
+
       updatedMember.photos.push(photo);
 
-      this.memberChange.emit(updatedMember);
+      if (photo.isMain) {
+        this.updateClientPhoto(photo);
+        this.memberService.members.update(members => members.map(m => {
+          if (m.photos.includes(photo)) {
+            m.photoUrl = photo.url;
+          }
+          return m;
+        }));
+      } else {
+        this.memberChange.emit(updatedMember);
+      }
     }
+  }
+
+  updateClientPhoto(photo: Photo) {
+    const user = this.accountService.currentUser();
+    if (user) {
+      user.photoUrl = photo.url;
+      this.accountService.setCurrentUser(user);
+    }
+
+    const updatedMember = { ...this.member() };
+    updatedMember.photoUrl = photo.url;
+    updatedMember.photos.forEach(p => {
+      if (p.isMain) {
+        p.isMain = false;
+      }
+      if (p.id === photo.id) {
+        p.isMain = true;
+      }
+    })
+
+    this.memberChange.emit(updatedMember);
   }
 }
