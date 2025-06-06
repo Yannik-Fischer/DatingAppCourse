@@ -72,12 +72,12 @@ export class PhotoEditorComponent implements OnInit {
 
       if (photo.isMain) {
         this.updateClientPhoto(photo);
-        this.memberService.members.update(members => members.map(m => {
-          if (m.photos.includes(photo)) {
-            m.photoUrl = photo.url;
-          }
-          return m;
-        }));
+        // this.memberService.members.update(members => members.map(m => {
+        //   if (m.photos.includes(photo)) {
+        //     m.photoUrl = photo.url;
+        //   }
+        //   return m;
+        // }));
       } else {
         this.memberChange.emit(updatedMember);
       }
