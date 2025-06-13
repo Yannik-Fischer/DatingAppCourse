@@ -26,6 +26,7 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<LogUserActivity>();
         services.AddScoped<IUnitOfWork, UnitOfWork>();
+        services.AddScoped<IPhotoRepository, PhotoRepository>();
         services.AddSingleton<PresenceTracker>();
         services.AddSignalR();
 

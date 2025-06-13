@@ -10,9 +10,16 @@ namespace Api.Data;
 
 public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
 {
-    public async Task<MemberDto?> GetMemberByUsernameAsync(string username)
+    public async Task<MemberDto?> GetMemberByUsernameAsync(string username, bool ignoreFilter)
     {
-        return await context.Users.Where(x => x.NormalizedUserName == username.ToUpper()).ProjectTo<MemberDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
+        var query = context.Users.Where(x => x.NormalizedUserName == username.ToUpper());
+
+        if (ignoreFilter)
+        {
+            query = query.IgnoreQueryFilters();
+        }
+
+        return await query.ProjectTo<MemberDto>(mapper.ConfigurationProvider).SingleOrDefaultAsync();
     }
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -45,6 +52,11 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
     public async Task<AppUser?> GetUserByUsernameAsync(string username)
     {
         return await context.Users.Include(x => x.Photos).SingleOrDefaultAsync(x => x.NormalizedUserName == username.ToUpper());
+    }
+
+    public async Task<AppUser?> GetUserByPhotoIdAsync(int id)
+    {
+        return await context.Users.Include(x => x.Photos).IgnoreQueryFilters().SingleOrDefaultAsync(x => x.Photos.Any(y => y.Id == id));
     }
 
     public async Task<IEnumerable<AppUser>> GetUsersAsync()

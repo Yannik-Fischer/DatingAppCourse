@@ -9,6 +9,7 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
     IdentityUserLogin<int>, IdentityRoleClaim<int>, IdentityUserToken<int>>(options)
 {
     public DbSet<UserLike> Likes { get; set; }
+    public DbSet<Photo> Photos { get; set; }
     public DbSet<Message> Messages { get; set; }
     public DbSet<Group> Groups { get; set; }
     public DbSet<Connection> Connections { get; set; }
@@ -48,5 +49,8 @@ public class DataContext(DbContextOptions options) : IdentityDbContext<AppUser, 
             .HasOne(x => x.Recipient)
             .WithMany(x => x.MessagesReceived)
             .OnDelete(DeleteBehavior.Restrict);
+
+        builder.Entity<Photo>()
+        .HasQueryFilter(p => p.IsApproved);
     }
 }

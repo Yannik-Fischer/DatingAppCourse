@@ -1,16 +1,21 @@
 <div class="row">
     @for (photo of member().photos; track photo.id) {
-    <div class="col-2 my-2">
-        <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1">
+    <div class="col-2 my-2 img-container">
+        <img src="{{photo.url}}" alt="photo of user" class="img-thumbnail mb-1" [class.toBeApproved]="!photo.isApproved">
         <div class="d-flex justify-content-evenly">
             @if (photo.isMain) {
                 <button disabled class="btn btn-sm col-8 btn-outline-primary">Main</button>
                 <button disabled class="btn btn-sm btn-outline-danger col-3"><i class="fa fa-trash"></i></button>
             } @else {
-                <button (click)="setMainPhoto(photo)" class="btn btn-sm col-8 btn-primary">Set Main</button>
+                <button (click)="setMainPhoto(photo)" [disabled]="!photo.isApproved" [class.btn-primary-outline]="!photo.isApproved" [class.btn-primary]="photo.isApproved" class="btn btn-sm col-8">Set Main</button>
                 <button (click)="deletePhoto(photo)" class="btn btn-sm btn-danger col-3"><i class="fa fa-trash"></i></button>
             }
         </div>
+        @if (!photo.isApproved) {
+            <div class="text-center toBeApproved">
+                <span class="text-danger">Awaiting approval</span>
+            </div>
+        }
     </div>
     }
 </div>
