@@ -1,5 +1,3 @@
-using System;
-using System.Threading.Tasks;
 using Api.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;

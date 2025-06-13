@@ -1,5 +1,3 @@
-using System;
-
 namespace Api.SignalR;
 
 public class PresenceTracker

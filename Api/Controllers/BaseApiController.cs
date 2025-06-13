@@ -1,4 +1,3 @@
-using System;
 using Api.Helpers;
 using Microsoft.AspNetCore.Mvc;
 

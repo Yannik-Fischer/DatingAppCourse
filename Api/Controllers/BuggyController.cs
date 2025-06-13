@@ -1,4 +1,3 @@
-using System;
 using Api.Data;
 using Api.Entities;
 using Microsoft.AspNetCore.Authorization;

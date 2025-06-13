@@ -1,5 +1,5 @@
 <div class="card">
-    <div class="card-body">
+    <div class="card-body" #chatWindow>
         @if (messageService.messageThread().length === 0) {
             <p>No messages yet</p>
         } @else {
@@ -34,7 +34,7 @@
     <div class="card-footer">
         <form #messageForm="ngForm" (ngSubmit)="sendMessage()">
             <div class="input-group">
-                <input type="text" class="form-control input-sm" placeholder="Send a private message" name="messageContent" required [(ngModel)]="messageContent">
+                <input type="text" class="form-control input-sm" placeholder="Send a private message" name="messageContent" autocomplete="off" required [(ngModel)]="messageContent">
                 <div class="input group-append">
                     <button class="btn btn-primary" type="submit" [disabled]="!messageForm.valid">Send</button>
                 </div>

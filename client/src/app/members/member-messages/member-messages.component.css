@@ -2,6 +2,12 @@
     border: none;
 }
 
+.card-body {
+    overflow: scroll;
+    height: 500px;
+    scroll-behavior: smooth;
+}
+
 .chat {
     list-style: none;
     margin: 0;
