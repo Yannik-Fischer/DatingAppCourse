@@ -1,8 +1,8 @@
-using System;
 using Api.Data;
 using Api.Helpers;
 using Api.Interfaces;
 using Api.Services;
+using Api.SignalR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Api.Extensions;
@@ -25,6 +25,8 @@ public static class ApplicationServiceExtensions
         services.AddScoped<IMessageRepository, MessageRepository>();
         services.AddScoped<IPhotoService, PhotoService>();
         services.AddScoped<LogUserActivity>();
+        services.AddSingleton<PresenceTracker>();
+        services.AddSignalR();
 
         return services;
     }

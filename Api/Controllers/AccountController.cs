@@ -49,7 +49,7 @@ public class AccountController(UserManager<AppUser> userManager, ITokenService t
         var result = await userManager.CheckPasswordAsync(user, loginDto.Password);
         if (!result)
         {
-            return Unauthorized();
+            return Unauthorized("Invalid credentials");
         }
 
         return new UserDto
